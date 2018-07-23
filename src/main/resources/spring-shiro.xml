@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:c="http://www.springframework.org/schema/c" xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:lang="http://www.springframework.org/schema/lang" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+	<bean id="systemLogoutFilter" class="com.sinux.ssh.interceptor.SystemLogoutFilter" />
+	<!-- Shiro 的Web过滤器 -->
+	<bean id="shiroFilter" class="com.sinux.ssh.ShiroHttpServlet.MyShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<!-- loginUrl认证提交地址，如果没有认证将会请求此地址进行认证 -->
+		<property name="loginUrl" value="/user/login.action" />
+		<!-- 认证成功统一跳转到backsys.jsp -->
+		<property name="successUrl" value="/user/redirct.action?address=extra/sysWelcome" />
+		<property name="filters">
+			<map>
+				<!--退出过滤器 -->
+				<entry key="logout" value-ref="systemLogoutFilter" />
+			</map>
+		</property>
+		<!-- 过虑器链定义，从上向下顺序执行 -->
+		<property name="filterChainDefinitions">
+			<value>
+				<!-- 对静态资源访问 -->
+				/index.jsp=anon
+				/tlds/** = anon
+				/views/** = anon
+				/logout.action=logout
+				<!-- /** = authc拦截所有请求 -->
+				/**= authc
+
+			</value>
+		</property>
+	</bean>
+	<!-- securityManager安全管理器 -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<!-- 注入认证授权类 -->
+		<property name="realm" ref="customRealm" />
+		<!-- 注入session管理器 -->
+		<property name="sessionManager" ref="sessionManager" />
+		<!-- 注入自定义缓存管理器 -->
+		<property name="cacheManager" ref="shiroCacheManager" />
+	</bean>
+	<!-- realm -->
+	<bean id="customRealm" class="com.sinux.ssh.shrio.CustomRealm">
+		<!-- 将凭证匹配器设置到realm中 -->
+		<property name="credentialsMatcher" ref="credentialsMatcher" />
+	</bean>
+	<!-- 凭证匹配器 -->
+	<bean id="credentialsMatcher"
+		class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+		<property name="hashAlgorithmName" value="md5" />
+		<property name="hashIterations" value="1" />
+	</bean>
+	<!-- session管理器 -->
+	<bean id="sessionManager"
+		class="com.sinux.ssh.interceptor.SessionManager">
+		<!-- session的失效时长，单位毫秒-->
+		<property name="sessionvalidateTime" value="600000" /> 
+		<!-- 设置退出时session销毁等待时长-->
+		<property name="loginOutValidateTime" value="1000" /> 
+		<!-- 删除失效的session -->
+		<property name="deleteInvalidSessions" value="true" />
+	</bean>
+	<!-- 系统缓存管理器 -->
+	<bean id="shiroCacheManager" class="com.sinux.ssh.global.EhCacheManager">
+		<property name="cacheManager" ref="cacheManager" />
+	</bean>
+	<!-- 会话管理器 -->
+</beans>

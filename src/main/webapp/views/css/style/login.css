@@ -1,0 +1,27 @@
+@CHARSET "UTF-8";
+
+* {
+	list-style: none;
+}
+
+.tipinfo font.error {
+	background:
+		url("/exceltodatabase/views/css/images/validate/unchecked.jpg")
+		no-repeat left;
+	padding-left: 20px;
+	color: #eb0000;
+	width: 200px;
+	display: block;
+}
+
+.tipinfo font.valid {
+	background:
+		url("/exceltodatabase/views/css/images/validate/checked.gif")
+		no-repeat left;
+	width: 14px;
+	height: 13px;
+	overflow: hidden;
+	padding: 0;
+	margin: 5px 0 0 5px;
+	display: inline-block;
+}

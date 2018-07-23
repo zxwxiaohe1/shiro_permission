@@ -1,0 +1,108 @@
+@CHARSET "UTF-8";
+ol,ul,li {
+	list-style: none;
+}
+
+.backhome {
+	padding: 20px;
+	overflow: hidden;
+}
+.backhome p {
+	margin-left:350px;
+	font-size:64px;
+	color: rgb(85, 180, 253);
+}
+.nleft ul {
+	margin-left: 10px;
+}
+
+.nleft ul li {
+	float: left;
+	margin-left: 10px;
+}
+
+.nright ul {
+	margin-left: 0px;
+}
+
+.mnuebar ul {
+	margin-left: 30px;
+}
+
+.mnuebar ul li {
+	margin-top: 10px;
+}
+
+.mnuebar ul li a {
+	font-size: 13px;
+	color: rgb(109, 120, 127);
+	text-decoration: none;
+}
+
+.mnuebar ul li a:hover {
+	font-size: 13px;
+	text-decoration: none;
+	border: 0px #0000FF solid;
+	color: #333333;
+	background-color: rgb(85, 180, 253);
+	height: 20px;
+}
+.sysfonts {
+	font-size: 24px;
+	color: rgb(109, 120, 127);
+	margin-left: 50px;
+	
+}
+
+.sysfont {
+	float: left;
+	margin-left: 0px;
+	font-size: 24px;
+	color: rgb(109, 120, 127);
+}
+
+.north {
+	height: 100px;
+	padding: 5px;
+	background-color: rgb(237, 244, 254)
+}
+
+.west {
+	width: 300px;
+	padding: 1px;
+	overflow: hidden;
+}
+
+.mnuebar {
+	padding: 10px;
+	overflow: auto;
+}
+
+.northd {
+	width: 100%;
+	height: 100%;
+	float: left;
+	border: 0px red solid;
+}
+
+.nleft {
+	width: 25%;
+	height: 100%;
+	float: left;
+	border: 0px red solid;
+}
+
+.nright {
+	width: 70%;
+	height: 100%;
+	float: left;
+	border: 0px red solid;
+}
+#lginfo{
+	float:right;
+	margin-top;20px;
+}
+#lginfo li{
+	float:left;
+	margin-left:20px;
+}
